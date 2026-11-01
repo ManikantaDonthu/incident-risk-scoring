@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    ports: ["8080:8080"]
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/riskdb
+      SPRING_DATASOURCE_USERNAME: riskuser
+      SPRING_DATASOURCE_PASSWORD: riskpass
+      SPRING_DATASOURCE_DRIVER: org.postgresql.Driver
+    depends_on:
+      db: { condition: service_healthy }
+  db:
+    image: postgres:16
+    environment: { POSTGRES_DB: riskdb, POSTGRES_USER: riskuser, POSTGRES_PASSWORD: riskpass }
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U riskuser -d riskdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
