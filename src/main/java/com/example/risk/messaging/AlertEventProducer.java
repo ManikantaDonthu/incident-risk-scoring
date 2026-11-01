@@ -3,10 +3,12 @@ package com.example.risk.messaging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(name = "kafka.enabled", havingValue = "true")
 public class AlertEventProducer {
 
     private static final Logger log = LoggerFactory.getLogger(AlertEventProducer.class);

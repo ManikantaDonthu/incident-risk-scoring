@@ -13,5 +13,11 @@ spring:
   h2:
     console:
       enabled: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:incident-risk-group}
+    listener:
+      auto-startup: ${KAFKA_ENABLED:false}
 server:
   port: ${PORT:8080}
